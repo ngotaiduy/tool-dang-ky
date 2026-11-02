@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tool hỗ trợ điền form đăng ký thi HSK</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1 class="page-header__heading">
+        Tool hỗ trợ điền form đăng ký thi HSK
+      </h1>
+      <p class="page-header__lead">
+        Nhập thông tin một lần. Tool tự canh bài viết Facebook, tự mở link đăng
+        ký ngay khi bài được cập nhật và tự điền từng trang form. Bạn tự bấm
+        "Tiếp", tự tải ảnh giấy tờ và tự bấm "Gửi".
+      </p>
+    </header>
+
+    <main class="registration">
+      <section
+        class="install-guide"
+        id="install-guide"
+        data-context="web"
+        aria-labelledby="install-guide-heading"
+      >
+        <h2 class="install-guide__heading" id="install-guide-heading">
+          Cài tiện ích (chỉ làm một lần)
+        </h2>
+        <p class="install-guide__lead">
+          Tính năng tự động chỉ chạy khi cài tiện ích vào trình duyệt Chrome
+          hoặc Edge trên máy tính.
+        </p>
+        <ol class="install-guide__steps">
+          <li>
+            Bấm nút
+            <a
+              class="button button--primary install-guide__download"
+              data-release-link
+              href="https://github.com"
+              >Tải tiện ích</a
+            >
+            để tải file <code>hsk-extension.zip</code>.
+          </li>
+          <li>
+            Mở thư mục <strong>Tải xuống</strong>, bấm chuột phải vào file vừa
+            tải, chọn <strong>Giải nén tất cả</strong> (Extract All) rồi bấm
+            <strong>Giải nén</strong>. Không xoá thư mục này sau khi cài.
+          </li>
+          <li>
+            Gõ <code>chrome://extensions</code> vào thanh địa chỉ rồi nhấn
+            Enter (Edge: <code>edge://extensions</code>).
+          </li>
+          <li>
+            Bật <strong>Chế độ dành cho nhà phát triển</strong> (Developer
+            mode).
+          </li>
+          <li>
+            Bấm <strong>Tải tiện ích đã giải nén</strong> (Load unpacked) và
+            chọn thư mục <code>hsk-extension</code> vừa giải nén. Trang tool sẽ
+            tự mở.
+          </li>
+          <li>
+            Bấm biểu tượng mảnh ghép trên thanh công cụ, ghim
+            <strong>Tool đăng ký thi HSK</strong>. Lần sau bấm biểu tượng này để
+            mở tool.
+          </li>
+        </ol>
+        <p class="install-guide__lead">
+          Không cài được tiện ích? Bạn vẫn có thể dùng chế độ dấu trang (bán tự
+          động) ở form bên dưới.
+        </p>
+      </section>
+
+      <form class="registration__form" id="registration-form" novalidate>
+        <fieldset class="registration__group" data-context="extension">
+          <legend class="registration__legend">Bài viết đăng ký</legend>
+
+          <div class="form-field">
+            <label class="form-field__label" for="postUrl"
+              >Link bài viết Facebook
+              <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="postUrl"
+              name="postUrl"
+              type="url"
+              autocomplete="off"
+              placeholder="https://www.facebook.com/share/p/..."
+            />
+            <p class="form-field__hint">
+              Bài viết thông báo sẽ được sửa để thêm link đăng ký.
+            </p>
+            <p class="form-field__error" data-error-for="postUrl"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="examTarget"
+              >Cấp HSK muốn thi <span class="form-field__required">*</span></label
+            >
+            <select
+              class="form-field__input"
+              id="examTarget"
+              name="examTarget"
+              data-other-target="examTargetOther"
+            >
+              <option value="">-- Chọn --</option>
+              <option value="__test__">Kiểm thử tool: mở form điền thử</option>
+              <option value="HSK 1">HSK 1</option>
+              <option value="HSK 2">HSK 2</option>
+              <option value="HSK 3">HSK 3</option>
+              <option value="HSK 4">HSK 4</option>
+              <option value="HSK 5">HSK 5</option>
+              <option value="HSK 6">HSK 6</option>
+              <option value="__other__">Khác (tự nhập)</option>
+            </select>
+            <input
+              class="form-field__input form-field__input--other"
+              id="examTargetOther"
+              name="examTargetOther"
+              type="text"
+              placeholder="Chữ ở đầu dòng có link, VD: HSKK Sơ cấp"
+              hidden
+            />
+            <p class="form-field__hint">
+              Tool mở link nằm cùng dòng với chữ này trong bài, VD: "HSK 4 + HSK
+              Khẩu ngữ Trung cấp: https://forms.gle/...". Chọn "Kiểm thử" để chạy
+              thử ngay với form điền thử trong bài.
+            </p>
+            <p class="form-field__error" data-error-for="examTarget"></p>
+          </div>
+
+          <div class="form-field" data-hide-for-test>
+            <label class="form-field__label" for="openAt"
+              >Thời gian bài viết cập nhật link
+              <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="openAt"
+              name="openAt"
+              type="datetime-local"
+            />
+            <p class="form-field__hint">
+              VD: 20:00 ngày 26/10/2026. Tool bắt đầu tải lại bài viết 3 phút
+              trước giờ này, mỗi 3 giây một lần.
+            </p>
+            <p class="form-field__error" data-error-for="openAt"></p>
+          </div>
+
+          <p class="registration__note">
+            Trước giờ đăng ký, hãy đăng nhập sẵn Facebook và tài khoản Google
+            trên trình duyệt này, và để máy không ngủ.
+          </p>
+        </fieldset>
+
+        <fieldset class="registration__group">
+          <legend class="registration__legend">Thông tin thí sinh</legend>
+
+          <div class="form-field">
+            <label class="form-field__label" for="name"
+              >Họ và tên <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">
+              Tự chuyển sang viết hoa, không dấu. VD: NGUYEN TUAN ANH
+            </p>
+            <p class="form-field__error" data-error-for="name"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="chineseName"
+              >Tên tiếng Trung</label
+            >
+            <input
+              class="form-field__input"
+              id="chineseName"
+              name="chineseName"
+              type="text"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">Không bắt buộc. VD: 阮俊英</p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="gender"
+              >Giới tính <span class="form-field__required">*</span></label
+            >
+            <select class="form-field__input" id="gender" name="gender">
+              <option value="">-- Chọn --</option>
+              <option value="Nam   |   男">Nam</option>
+              <option value="Nữ   |   女">Nữ</option>
+            </select>
+            <p class="form-field__error" data-error-for="gender"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="birthDate"
+              >Ngày sinh <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="birthDate"
+              name="birthDate"
+              type="date"
+            />
+            <p class="form-field__hint">
+              Sẽ điền theo dạng NĂM-THÁNG-NGÀY, VD: 2001-11-20
+            </p>
+            <p class="form-field__error" data-error-for="birthDate"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="nationality"
+              >Quốc tịch <span class="form-field__required">*</span></label
+            >
+            <select
+              class="form-field__input"
+              id="nationality"
+              name="nationality"
+              data-other-target="nationalityOther"
+            >
+              <option value="Việt Nam   |   越南">Việt Nam</option>
+              <option value="__other__">Khác</option>
+            </select>
+            <input
+              class="form-field__input form-field__input--other"
+              id="nationalityOther"
+              name="nationalityOther"
+              type="text"
+              placeholder="Nhập quốc tịch"
+              hidden
+            />
+            <p class="form-field__error" data-error-for="nationality"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="motherTongue"
+              >Tiếng mẹ đẻ <span class="form-field__required">*</span></label
+            >
+            <select
+              class="form-field__input"
+              id="motherTongue"
+              name="motherTongue"
+              data-other-target="motherTongueOther"
+            >
+              <option value="Tiếng Việt   |   越南语">Tiếng Việt</option>
+              <option value="__other__">Khác</option>
+            </select>
+            <input
+              class="form-field__input form-field__input--other"
+              id="motherTongueOther"
+              name="motherTongueOther"
+              type="text"
+              placeholder="Nhập tiếng mẹ đẻ"
+              hidden
+            />
+            <p class="form-field__error" data-error-for="motherTongue"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="studyDuration"
+              >Thời gian học tiếng Trung
+              <span class="form-field__required">*</span></label
+            >
+            <select
+              class="form-field__input"
+              id="studyDuration"
+              name="studyDuration"
+            >
+              <option value="">-- Chọn --</option>
+              <option value="Dưới 6 tháng  |  6个月以下">Dưới 6 tháng</option>
+              <option value="1 năm  |  1年">1 năm</option>
+              <option value="2 năm  |  2年">2 năm</option>
+              <option value="3 năm  |  3年">3 năm</option>
+              <option value="4 năm  |  4年">4 năm</option>
+              <option value="5 năm  |  5年">5 năm</option>
+              <option value="5-10 năm  |  5-10年">5-10 năm</option>
+              <option value="10 năm trở lên  |  10年以上">
+                10 năm trở lên
+              </option>
+            </select>
+            <p class="form-field__error" data-error-for="studyDuration"></p>
+          </div>
+        </fieldset>
+
+        <fieldset class="registration__group">
+          <legend class="registration__legend">Giấy tờ tuỳ thân</legend>
+
+          <div class="form-field">
+            <label class="form-field__label" for="idType"
+              >Loại giấy tờ <span class="form-field__required">*</span></label
+            >
+            <select class="form-field__input" id="idType" name="idType">
+              <option value="CCCD   |   身份证">CCCD</option>
+              <option value="HỘ CHIẾU   |   护照">Hộ chiếu</option>
+            </select>
+          </div>
+
+          <div class="form-field" data-show-for-id="CCCD   |   身份证">
+            <label class="form-field__label" for="idNumber"
+              >Số CCCD <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="idNumber"
+              name="idNumber"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">12 số, viết liền. VD: 033056789514</p>
+            <p class="form-field__error" data-error-for="idNumber"></p>
+          </div>
+
+          <div class="form-field" data-show-for-id="HỘ CHIẾU   |   护照" hidden>
+            <label class="form-field__label" for="passportNumber"
+              >Số hộ chiếu <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="passportNumber"
+              name="passportNumber"
+              type="text"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">Viết liền, không cách. VD: B1234567</p>
+            <p class="form-field__error" data-error-for="passportNumber"></p>
+          </div>
+        </fieldset>
+
+        <fieldset class="registration__group">
+          <legend class="registration__legend">Liên hệ</legend>
+
+          <div class="form-field">
+            <label class="form-field__label" for="email"
+              >Email <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">
+              Chữ thường, tối đa một dấu "." trước @. Tên miền: gmail.com,
+              yahoo.com, icloud.com, qq.com, 163.com, outlook.com, naver.com,
+              hotmail.com
+            </p>
+            <p class="form-field__error" data-error-for="email"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="phone"
+              >Số điện thoại <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">
+              Số Việt Nam, viết liền. VD: 0830123456 hoặc +84830123456
+            </p>
+            <p class="form-field__error" data-error-for="phone"></p>
+          </div>
+        </fieldset>
+
+        <fieldset class="registration__group">
+          <legend class="registration__legend">Tài khoản nộp lệ phí</legend>
+
+          <div class="form-field">
+            <label class="form-field__label" for="paymentMethod"
+              >Phương thức chuyển khoản
+              <span class="form-field__required">*</span></label
+            >
+            <select
+              class="form-field__input"
+              id="paymentMethod"
+              name="paymentMethod"
+            >
+              <option value="E-BANKING (ĐỀ XUẤT) | 电子银行转账（推荐）">
+                E-Banking (đề xuất)
+              </option>
+              <option value="CHUYỂN KHOẢN TẠI NGÂN HÀNG | 银行柜台转账">
+                Chuyển khoản tại ngân hàng
+              </option>
+              <option
+                value="CÁC NỀN TẢNG THANH TOÁN ONLINE KHÁC | 其他支付平台"
+              >
+                Nền tảng thanh toán online khác
+              </option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="accountNumber"
+              >Số tài khoản <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="accountNumber"
+              name="accountNumber"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">
+              Chuyển khoản tại ngân hàng sẽ tự điền "0".
+            </p>
+            <p class="form-field__error" data-error-for="accountNumber"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="accountHolder"
+              >Chủ tài khoản <span class="form-field__required">*</span></label
+            >
+            <input
+              class="form-field__input"
+              id="accountHolder"
+              name="accountHolder"
+              type="text"
+              autocomplete="off"
+            />
+            <p class="form-field__hint">Tự chuyển sang viết hoa, không dấu.</p>
+            <p class="form-field__error" data-error-for="accountHolder"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="bank"
+              >Ngân hàng <span class="form-field__required">*</span></label
+            >
+            <select
+              class="form-field__input"
+              id="bank"
+              name="bank"
+              data-other-target="bankOther"
+            >
+              <option value="">-- Chọn --</option>
+              <option value="AGRIBANK">AGRIBANK</option>
+              <option value="BIDV">BIDV</option>
+              <option value="MB BANK">MB BANK</option>
+              <option value="VP BANK">VP BANK</option>
+              <option value="TP BANK">TP BANK</option>
+              <option value="TECHCOMBANK">TECHCOMBANK</option>
+              <option value="VIETCOMBANK">VIETCOMBANK</option>
+              <option value="VIETINBANK">VIETINBANK</option>
+              <option value="__other__">
+                Khác (ngân hàng / ví điện tử khác)
+              </option>
+            </select>
+            <input
+              class="form-field__input form-field__input--other"
+              id="bankOther"
+              name="bankOther"
+              type="text"
+              placeholder="Nhập tên ngân hàng / ví"
+              hidden
+            />
+            <p class="form-field__error" data-error-for="bank"></p>
+          </div>
+        </fieldset>
+
+        <fieldset class="registration__group">
+          <legend class="registration__legend">Câu hỏi xác thực</legend>
+
+          <div class="form-field">
+            <label class="form-field__label" for="verificationAnswer"
+              >Đáp án câu hỏi xác thực</label
+            >
+            <input
+              class="form-field__input"
+              id="verificationAnswer"
+              name="verificationAnswer"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="VD: 1620000"
+            />
+            <p class="form-field__hint">
+              Chỉ ghi chữ số, không có dấu chấm hoặc dấu phẩy. Bỏ trống nếu muốn
+              tự trả lời trên form.
+            </p>
+            <p class="form-field__error" data-error-for="verificationAnswer"></p>
+          </div>
+        </fieldset>
+
+        <div class="registration__actions">
+          <button
+            class="button button--primary"
+            type="submit"
+            data-context="extension"
+          >
+            Lưu &amp; bắt đầu tự động
+          </button>
+          <button class="button button--primary" type="submit" data-context="web">
+            Kiểm tra &amp; tạo nút điền
+          </button>
+          <button class="button button--ghost" type="button" id="clear-data">
+            Xoá dữ liệu đã lưu
+          </button>
+        </div>
+      </form>
+
+      <section
+        class="watch-status"
+        id="watch-status"
+        data-context="extension"
+        aria-labelledby="watch-status-heading"
+      >
+        <h2 class="watch-status__heading" id="watch-status-heading">
+          Trạng thái tự động
+        </h2>
+        <dl class="field-summary">
+          <div class="field-summary__row">
+            <dt class="field-summary__term">Trạng thái</dt>
+            <dd class="field-summary__value" data-status="state" aria-live="polite">
+              Chưa bắt đầu
+            </dd>
+          </div>
+          <div class="field-summary__row" hidden>
+            <dt class="field-summary__term">Đang canh</dt>
+            <dd class="field-summary__value" data-status="target"></dd>
+          </div>
+          <div class="field-summary__row" hidden>
+            <dt class="field-summary__term">Giờ cập nhật</dt>
+            <dd class="field-summary__value" data-status="openAt"></dd>
+          </div>
+          <div class="field-summary__row" hidden>
+            <dt class="field-summary__term">Lần kiểm tra gần nhất</dt>
+            <dd class="field-summary__value" data-status="lastCheck"></dd>
+          </div>
+          <div class="field-summary__row" hidden>
+            <dt class="field-summary__term">Link đăng ký</dt>
+            <dd class="field-summary__value">
+              <a
+                class="watch-status__link"
+                data-status="foundUrl"
+                href="#"
+                target="_blank"
+                rel="noopener"
+              ></a>
+            </dd>
+          </div>
+          <div class="field-summary__row" hidden>
+            <dt class="field-summary__term">Lần điền gần nhất</dt>
+            <dd class="field-summary__value" data-status="lastFill"></dd>
+          </div>
+          <div class="field-summary__row" hidden>
+            <dt class="field-summary__term">Ghi chú</dt>
+            <dd class="field-summary__value" data-status="message"></dd>
+          </div>
+        </dl>
+        <div class="watch-status__actions">
+          <button class="button button--ghost" type="button" id="stop-watch">
+            Dừng tự động
+          </button>
+        </div>
+        <p class="watch-status__note">
+          Giữ trình duyệt mở. Khi đang ở một form Google bất kỳ, bấm biểu tượng
+          tiện ích để điền lại trang đó.
+        </p>
+      </section>
+
+      <section
+        class="filler-output"
+        id="filler-output"
+        aria-labelledby="filler-output-heading"
+        hidden
+      >
+        <h2 class="filler-output__heading" id="filler-output-heading">
+          Nút điền form
+        </h2>
+
+        <ol class="filler-output__steps">
+          <li>
+            Hiện thanh dấu trang bằng <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+            <kbd>B</kbd>, rồi kéo nút màu xanh lá dưới đây lên thanh dấu trang.
+          </li>
+          <li>
+            Mở form đăng ký. Ở mỗi trang, bấm dấu trang
+            <strong>Điền form HSK</strong> một lần, kiểm tra lại, rồi tự bấm
+            "Tiếp".
+          </li>
+          <li>
+            Tự tải ảnh mặt trước giấy tờ. Ở trang câu hỏi xác thực, bấm dấu
+            trang để điền đáp án, kiểm tra lại rồi tự bấm "Gửi".
+          </li>
+          <li>
+            Nếu sửa thông tin, hãy bấm tạo lại và kéo lại dấu trang mới (dấu
+            trang cũ vẫn giữ dữ liệu cũ).
+          </li>
+        </ol>
+
+        <div class="filler-output__actions">
+          <a class="button button--bookmarklet" id="bookmarklet-link" href="#"
+            >Điền form HSK</a
+          >
+          <button class="button button--ghost" type="button" id="copy-script">
+            Copy script (dán vào Console)
+          </button>
+        </div>
+
+        <h3 class="filler-output__subheading">Dữ liệu sẽ điền</h3>
+        <dl class="field-summary" id="field-summary"></dl>
+      </section>
+    </main>
+
+    <script src="js/form-filler.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

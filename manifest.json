@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Tool đăng ký thi HSK",
+  "version": "1.0.0",
+  "description": "Canh bài viết Facebook, tự mở link đăng ký thi HSK khi bài được cập nhật và tự điền form Google.",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Tool đăng ký thi HSK (bấm khi đang mở form để điền)",
+    "default_icon": {
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": ["storage", "alarms", "scripting", "notifications"],
+  "host_permissions": [
+    "https://www.facebook.com/*",
+    "https://web.facebook.com/*",
+    "https://m.facebook.com/*",
+    "https://docs.google.com/forms/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://docs.google.com/forms/*"],
+      "js": ["js/form-page.js"]
+    }
+  ]
+}

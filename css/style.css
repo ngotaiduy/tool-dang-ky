@@ -1,0 +1,319 @@
+:root {
+  --color-primary: #1d4ed8;
+  --color-primary-dark: #1e3a8a;
+  --color-text: #1f2937;
+  --color-muted: #6b7280;
+  --color-border: #d1d5db;
+  --color-surface: #ffffff;
+  --color-background: #eef2f7;
+  --color-error: #b91c1c;
+  --color-success: #15803d;
+  --radius: 10px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem 4rem;
+  font: 15px/1.5 "Segoe UI", Arial, sans-serif;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+/* Page header */
+.page-header {
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+}
+
+.page-header__heading {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  color: var(--color-primary-dark);
+}
+
+.page-header__lead {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+/* Registration form */
+.registration {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.registration__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.registration__legend {
+  padding: 0 0.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.registration__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.registration__note {
+  flex: 1 1 100%;
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  background: var(--color-background);
+}
+
+/* Install guide (web only) */
+.install-guide {
+  padding: 1.25rem;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.install-guide__heading {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+}
+
+.install-guide__lead {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.install-guide__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+}
+
+.install-guide__download {
+  margin: 0 0.25rem;
+}
+
+/* Watch status (extension only) */
+.watch-status {
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.watch-status__heading {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+}
+
+.watch-status__link {
+  color: var(--color-primary);
+  word-break: break-all;
+}
+
+.watch-status__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.watch-status__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* Form field */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 280px;
+}
+
+.form-field__label {
+  font-weight: 600;
+}
+
+.form-field__required {
+  color: var(--color-error);
+}
+
+.form-field__input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  color: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+}
+
+.form-field__input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.form-field__input[readonly] {
+  background: var(--color-background);
+}
+
+.form-field__input--invalid {
+  border-color: var(--color-error);
+}
+
+.form-field__hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.form-field__error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-error);
+}
+
+.form-field__error:empty {
+  display: none;
+}
+
+/* Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button--primary {
+  color: var(--color-surface);
+  background: var(--color-primary);
+}
+
+.button--primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.button--ghost {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: transparent;
+}
+
+.button--bookmarklet {
+  color: var(--color-surface);
+  background: var(--color-success);
+  cursor: grab;
+}
+
+.button--small {
+  padding: 0.25rem 0.7rem;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  border-color: var(--color-border);
+  background: var(--color-surface);
+}
+
+/* Output */
+.filler-output {
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.filler-output__heading {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+}
+
+.filler-output__subheading {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+}
+
+.filler-output__steps {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.filler-output__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Summary list */
+.field-summary {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.field-summary__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.field-summary__term {
+  flex: 0 0 200px;
+  font-weight: 600;
+}
+
+.field-summary__value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex: 1 1 240px;
+  margin: 0;
+}
+
+.field-summary__text {
+  word-break: break-word;
+}

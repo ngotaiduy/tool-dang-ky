@@ -1,0 +1,28 @@
+name: Đóng gói tiện ích
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Zip extension files
+        run: zip -r hsk-extension.zip manifest.json index.html css js icons
+
+      - name: Publish as the "latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest hsk-extension.zip \
+            --title "Tiện ích đăng ký thi HSK (bản mới nhất)" \
+            --notes "Tải hsk-extension.zip, giải nén rồi cài theo hướng dẫn trên trang tool." \
+            --latest
